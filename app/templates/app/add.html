@@ -1,0 +1,112 @@
+{% extends "app/base.html" %}
+
+{% block body %}
+  <h3 class="text-center m-4">Add Book</h3>
+  {% if success %}
+    <div class="alert alert-success" role="alert">
+      The new book added successfully.
+      <a href="{% url 'home' %}" class="alert-link">Go to Home Page.</a>
+    </div>
+  {% else %}
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card bg-light mb-3">
+          <div class="card-header text-center">
+            <i class="fa-solid fa-address-card fa-lg"></i> Book Registration
+          </div>
+          <div class="card-body">
+            <form action="{% url 'add' %}" method="POST" class="needs-validation" novalidate>
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                <input type="text" name="title" id="{{ form.title.id_for_label }}" class="form-control" value="{{ form.title.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.title.errors|striptags }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.author.id_for_label }}" class="form-label">{{ form.author.label }}</label>
+                <input type="text" name="author" id="{{ form.author.id_for_label }}" class="form-control" value="{{ form.author.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.author.errors|striptags }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.genre.id_for_label }}" class="form-label">{{ form.genre.label }}</label>
+                <input type="text" name="genre" id="{{ form.genre.id_for_label }}" class="form-control" value="{{ form.genre.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.genre.errors|striptags }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.publisher.id_for_label }}" class="form-label">{{ form.publisher.label }}</label>
+                <input type="text" name="publisher" id="{{ form.publisher.id_for_label }}" class="form-control" value="{{ form.publisher.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.publisher.errors|striptags }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.publication_date.id_for_label }}" class="form-label">{{ form.publication_date.label }}</label>
+                <input type="date" name="publication_date" id="{{ form.publication_date.id_for_label }}" class="form-control" value="{{ form.publication_date.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.publication_date.errors|striptags }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.available_copies.id_for_label }}" class="form-label">{{ form.available_copies.label }}</label>
+                <input type="number" name="available_copies" id="{{ form.available_copies.id_for_label }}" class="form-control" value="{{ form.available_copies.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.available_copies.errors|striptags }}</div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a href="{% url 'book_list' %}" class="btn btn-danger">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <style>
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #ddd;
+      border-radius: 15px 15px 0 0;
+    }
+    .card-body {
+      padding: 2rem;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+    .btn-danger {
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+    .form-control {
+      border-radius: 10px;
+      height: 2.5rem;
+    }
+    .form-label {
+      font-weight: bold;
+    }
+    .needs-validation .form-control:invalid {
+      border-color: #dc3545;
+    }
+    .needs-validation .form-control:invalid:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+    .needs-validation .form-control:valid {
+      border-color: #28a745;
+    }
+    .needs-validation .form-control:valid:focus {
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+  </style>
+{% endblock %}

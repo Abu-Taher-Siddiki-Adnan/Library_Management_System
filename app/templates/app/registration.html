@@ -1,0 +1,52 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="text-center">Employee Registration</h3>
+            <hr>
+            <form action="" method="post" novalidate class="shadow p-5 rounded">
+                {% csrf_token %}
+                
+                <!-- Render Form Fields -->
+                {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    <small class="text-danger">{{ field.errors|striptags }}</small>
+                </div>
+                {% endfor %}
+                
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+                
+                <!-- Redirect to Login -->
+                <div class="text-center text-primary fw-bold mt-3">
+                    <small>Existing User? <a href="{% url 'login' %}" class="text-danger"> Login Now </a></small>
+                </div>
+                
+                <!-- Display Non-Field Errors -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger my-3">
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Display Messages -->
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{ msg.tags }}" role="alert">
+                    {{ msg }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

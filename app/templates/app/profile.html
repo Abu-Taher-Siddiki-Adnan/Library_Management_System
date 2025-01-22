@@ -1,0 +1,92 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block body %}
+<div class="container my-5">
+    <style>
+        .custom-table {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            font-size: 1.2rem; 
+        }
+
+        .custom-table th, .custom-table td {
+            vertical-align: middle;
+        }
+
+        .btn-warning.btn-sm {
+            width: auto;
+            font-size: 1.1rem;
+            position:initial;
+            bottom: 10px;
+            right: 10px;
+        }
+
+       
+        .profile-container {
+            position: relative;
+        }
+    </style>
+    <div class="row profile-container">
+        <h3>Welcome <span class="text-capitalize">{{ request.user }}</span></h3>
+        <div class="col-sm-8 offset-sm-1">
+            {% if profile %}
+            <h3 class="mt-5">Profile Details</h3>
+            <table class="table table-bordered table-striped table-hover table-sm custom-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ profile.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile</th>
+                        <td>{{ profile.mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ profile.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{ profile.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Position</th>
+                        <td>{{ profile.position }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="{% url 'update_profile' profile.id %}" class="btn btn-warning btn-sm">Update</a>
+            {% else %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for fm in form %}
+                {{ fm.label_tag }} {{ fm }} <small class="text-danger"> {{ fm.errors|striptags }} </small><br>
+                {% endfor %}
+                <div class="col-12 mt-3">
+                    <input type="submit" value="Submit" class="btn btn-primary"> <br>
+                </div>
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3"> {{ error }}</p>
+                {% endfor %}
+                {% endif %}
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{ msg.tags }}" role="alert">
+                    {{ msg }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

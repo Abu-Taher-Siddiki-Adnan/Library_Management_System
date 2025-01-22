@@ -1,0 +1,57 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block body %}
+<style>
+    h1 {
+        font-size: 48px;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color: Black;
+        font-weight: bold;
+    }
+
+    p {
+        text-align: center;
+        font-size: 20px;
+        line-height: 1.6;
+        
+        color: black;
+        transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        background-color: rgba(143, 138, 138, 0.521);
+        padding: 10px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    p:hover {
+        transform: scale(1.01);
+    }
+
+    .description {
+
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+</style>
+<h1><b>Welcome to the Central Library of Mars</b></h1>
+<div class="description">
+    <p>Explore the wonders of our vast collection, ranging from ancient tomes that carry the wisdom of the past to the
+        latest intergalactic publications that bring you the cutting-edge discoveries of today. Our collection spans
+        across various genres and subjects, ensuring that every visitor finds something that piques their interest.</p>
+
+    <p>Our library is not just a repository of books; it is the heart of knowledge on Mars. We offer an extensive array
+        of resources, including digital archives, rare manuscripts, and interactive learning modules. Our
+        state-of-the-art facility provides a serene space for research, study, and intellectual exploration. Whether
+        you're a student, a researcher, or a casual reader, you'll find the perfect environment to immerse yourself in
+        learning.</p>
+
+    <p>Join us in a journey through the cosmos of knowledge. Here at the Central Library of Mars, every page is a new
+        adventure waiting to be discovered. With our innovative programs, guest lectures, and community events, we
+        foster a vibrant culture of learning and curiosity. Step into a world where knowledge knows no bounds, and let
+        your curiosity guide you through the endless possibilities that our library has to offer.</p>
+</div>
+{% endblock %}

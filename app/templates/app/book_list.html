@@ -1,0 +1,149 @@
+{% extends "app/base.html" %}
+
+{% block body %}
+<h3 class="m-4">All Books</h3>
+<div class="row">
+    <div class="col-12">
+        {% if books %}
+        <div class="card bg-light ms-4 me-4 mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-list fa-lg"></i> Books
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Publisher</th>
+                                <th scope="col">Available Copies</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bk in books %}
+                            <tr>
+                                <td>{{ bk.title }}</td>
+                                <td>{{ bk.author }}</td>
+                                <td>{{ bk.genre }}</td>
+                                <td>{{ bk.publisher }}</td>
+                                <td>{{ bk.available_copies }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success me-1"
+                                        href="#" data-bs-toggle="modal"
+                                        data-bs-target="#myModal{{bk.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                                    </button>
+
+                                    <div class="modal" id="myModal{{bk.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Book: {{ bk.title }} by {{ bk.author }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unstyled">
+                                                        <li>Title: <strong>{{ bk.title }}</strong></li>
+                                                        <li>Author: <strong>{{ bk.author }}</strong></li>
+                                                        <li>Genre: <strong>{{ bk.genre }}</strong></li>
+                                                        <li>Publisher: <strong>{{ bk.publisher }}</strong></li>
+                                                        <li>Publication Date: <strong>{{ bk.publication_date}}</strong></li>
+                                                        <li>Available copies: <strong>{{ bk.available_copies }}</strong></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <a class="btn btn-warning me-1" href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ bk.id }}">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <div class="modal fade" id="editModal{{ bk.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ bk.id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editModalLabel{{ bk.id }}">
+                                                        Edit Available Copies for "{{ bk.title }}"
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form method="POST" action="{% url 'update_book_copies' bk.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="availableCopies{{ bk.id }}" class="form-label">Available Copies</label>
+                                                            <input type="number" class="form-control" id="availableCopies{{ bk.id }}" name="available_copies" 
+                                                                   value="{{ bk.available_copies }}" min="0" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    
+
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#delete{{bk.id}}">
+                                        <i class="fa-solid fa-trash-can fa-lg"></i>
+                                    </button>
+
+                                    <div class="modal" id="delete{{bk.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Book: {{ bk.title }} by {{ bk.author }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p style="color: red; font-weight: bold;">Are you sure you want to remove this book?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{% url 'delete' bk.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="submit" class="btn btn-danger" value="Remove">
+                                                    </form>
+                                                    <button type="button" class="btn btn-success"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <h5 class="alert alert-primary ms-4 me-4">No Books Record</h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
