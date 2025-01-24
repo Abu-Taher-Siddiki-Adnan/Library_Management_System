@@ -56,7 +56,7 @@
                             Books</a>
                     </li>
                 </ul>
-                <form method="GET" action="{% url 'search' %}">
+                <form method="GET" action="{% url 'search_books' %}">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Search for books..." value="{{ query }}">
                         <button class="btn btn-secondary" type="submit">Search</button>

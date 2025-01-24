@@ -123,16 +123,18 @@ def update_profile(request, id):
     return render(request, 'app/update_profile.html', {'form': form, 'profile': profile})
 
 
-def search(request):
-    try:
-        query = request.GET.get('q', '').strip()
-        books = Books.objects.all()
 
-        if query:
-            books = books.filter(title__icontains=query)
-            
-        return render(request, 'app/search.html', {'books': books, 'query': query})
-    
-    except Exception as e:
-        return render(request, 'app/search.html', {'error': str(e)})
+
+def search_books(request):
+    query = request.GET.get('q')
+    if query:
+        books = Books.objects.filter(
+        Q(title__icontains=query) |
+        Q(author__icontains=query) |
+        Q(genre__icontains=query) |
+        Q(publisher__icontains=query)
+        )
+    else:
+        books = Books.objects.none()
+    return render(request, 'app/search_results.html', {'books': books, 'query': query})
 
