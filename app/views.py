@@ -7,6 +7,8 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm 
+from django.contrib.auth import update_session_auth_hash
 
 def home(request):
     return render(request, 'app/home.html')
@@ -123,8 +125,6 @@ def update_profile(request, id):
     return render(request, 'app/update_profile.html', {'form': form, 'profile': profile})
 
 
-
-
 def search_books(request):
     query = request.GET.get('q')
     if query:
@@ -138,3 +138,18 @@ def search_books(request):
         books = Books.objects.none()
     return render(request, 'app/search_results.html', {'books': books, 'query': query})
 
+class PasswordChangeView(View):
+    def get(self, request):
+        form = PasswordChangeForm(request.user)
+        return render(request, 'app/password_change.html', {'form': form})
+
+    def post(self, request):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important to keep the user logged in
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('password_change_done')
+        else:
+            messages.error(request, 'Please correct the error below.')
+        return render(request, 'app/password_change.html', {'form': form})

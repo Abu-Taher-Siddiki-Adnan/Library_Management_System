@@ -69,8 +69,12 @@
                             {{ request.user }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                            <a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a>
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a>
+                            </li>
                             <li>
                                 <form action="{% url 'logout' %}" method="post" style="display: inline;">
                                     {% csrf_token %}
