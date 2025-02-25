@@ -9,7 +9,7 @@ A **Django-based Library Management System** designed to manage books, users, an
 
 ## 📌 Project Overview  
 This was my **third Django project**, built to deepen my understanding of **Django models, views, authentication, and CRUD operations**. The system simplifies library operations by allowing users to search for books, borrow/return them, and manage their accounts.  
-📽 **Presentation Video:** [YouTube](https://youtu.be/d0XZmHHVIoo?si=axVAj9AKYGp3oCr1) 
+🎥 **Presentation Video:** [YouTube](https://www.youtube.com/watch?v=lyYiYlb2n_Q)  
 
 ### 🛠 Features  
 ✅ **User Authentication** – Secure login/logout for admin and users  
